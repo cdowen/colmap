@@ -136,7 +136,7 @@ class OptionManager {
   std::shared_ptr<mvs::PoissonMeshingOptions> poisson_meshing;
   std::shared_ptr<mvs::DelaunayMeshingOptions> delaunay_meshing;
 
-  std::shared_ptr<RenderOptions> render;
+//  std::shared_ptr<RenderOptions> render;
 
  private:
   template <typename T>
@@ -172,7 +172,7 @@ class OptionManager {
   bool added_stereo_fusion_options_;
   bool added_poisson_meshing_options_;
   bool added_delaunay_meshing_options_;
-  bool added_render_options_;
+//  bool added_render_options_;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

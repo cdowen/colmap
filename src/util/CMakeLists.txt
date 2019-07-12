@@ -40,7 +40,7 @@ COLMAP_ADD_SOURCES(
     math.h math.cc
     matrix.h
     misc.h misc.cc
-    opengl_utils.h opengl_utils.cc
+#    opengl_utils.h opengl_utils.cc
     option_manager.h option_manager.cc
     ply.h ply.cc
     random.h random.cc

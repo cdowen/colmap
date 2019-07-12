@@ -43,7 +43,7 @@
 #include "mvs/meshing.h"
 #include "mvs/patch_match.h"
 #include "optim/bundle_adjustment.h"
-#include "ui/render_options.h"
+//#include "ui/render_options.h"
 #include "util/misc.h"
 #include "util/version.h"
 
@@ -70,7 +70,7 @@ OptionManager::OptionManager(bool add_project_options) {
   stereo_fusion.reset(new mvs::StereoFusionOptions());
   poisson_meshing.reset(new mvs::PoissonMeshingOptions());
   delaunay_meshing.reset(new mvs::DelaunayMeshingOptions());
-  render.reset(new RenderOptions());
+//  render.reset(new RenderOptions());
 
   Reset();
 
@@ -179,7 +179,7 @@ void OptionManager::AddAllOptions() {
   AddStereoFusionOptions();
   AddPoissonMeshingOptions();
   AddDelaunayMeshingOptions();
-  AddRenderOptions();
+//  AddRenderOptions();
 }
 
 void OptionManager::AddLogOptions() {
@@ -671,7 +671,7 @@ void OptionManager::AddDelaunayMeshingOptions() {
   AddAndRegisterDefaultOption("DelaunayMeshing.num_threads",
                               &delaunay_meshing->num_threads);
 }
-
+/*
 void OptionManager::AddRenderOptions() {
   if (added_render_options_) {
     return;
@@ -688,7 +688,7 @@ void OptionManager::AddRenderOptions() {
   AddAndRegisterDefaultOption("Render.projection_type",
                               &render->projection_type);
 }
-
+*/
 void OptionManager::Reset() {
   FLAGS_logtostderr = false;
   FLAGS_v = 2;
@@ -719,7 +719,7 @@ void OptionManager::Reset() {
   added_stereo_fusion_options_ = false;
   added_poisson_meshing_options_ = false;
   added_delaunay_meshing_options_ = false;
-  added_render_options_ = false;
+//  added_render_options_ = false;
 }
 
 void OptionManager::ResetOptions(const bool reset_paths) {
@@ -742,7 +742,7 @@ void OptionManager::ResetOptions(const bool reset_paths) {
   *stereo_fusion = mvs::StereoFusionOptions();
   *poisson_meshing = mvs::PoissonMeshingOptions();
   *delaunay_meshing = mvs::DelaunayMeshingOptions();
-  *render = RenderOptions();
+//  *render = RenderOptions();
 }
 
 bool OptionManager::Check() {
@@ -775,7 +775,7 @@ bool OptionManager::Check() {
   if (poisson_meshing) success = success && poisson_meshing->Check();
   if (delaunay_meshing) success = success && delaunay_meshing->Check();
 
-  if (render) success = success && render->Check();
+//  if (render) success = success && render->Check();
 
   return success;
 }

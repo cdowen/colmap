@@ -34,6 +34,9 @@
 #include <array>
 #include <fstream>
 #include <memory>
+#include <mutex>
+#include <map>
+#include <GL/glew.h>
 
 #include "SiftGPU/SiftGPU.h"
 #include "VLFeat/covdet.h"
@@ -43,7 +46,7 @@
 #include "util/logging.h"
 #include "util/math.h"
 #include "util/misc.h"
-#include "util/opengl_utils.h"
+//#include "util/opengl_utils.h"
 
 namespace colmap {
 namespace {

@@ -47,7 +47,7 @@ add_subdirectory(optim)
 add_subdirectory(retrieval)
 add_subdirectory(sfm)
 add_subdirectory(tools)
-add_subdirectory(ui)
+#add_subdirectory(ui)
 add_subdirectory(util)
 
 COLMAP_ADD_LIBRARY(colmap ${COLMAP_SOURCES})

@@ -40,7 +40,7 @@
 #include "feature/sift.h"
 #include "util/alignment.h"
 #include "util/cache.h"
-#include "util/opengl_utils.h"
+//#include "util/opengl_utils.h"
 #include "util/threading.h"
 #include "util/timer.h"
 
@@ -259,7 +259,7 @@ class SiftGPUFeatureMatcher : public FeatureMatcherThread {
   JobQueue<Input>* input_queue_;
   JobQueue<Output>* output_queue_;
 
-  std::unique_ptr<OpenGLContextManager> opengl_context_;
+//  std::unique_ptr<OpenGLContextManager> opengl_context_;
 
   // The previously uploaded images to the GPU.
   std::array<image_t, 2> prev_uploaded_image_ids_;
@@ -303,7 +303,7 @@ class GuidedSiftGPUFeatureMatcher : public FeatureMatcherThread {
   JobQueue<Input>* input_queue_;
   JobQueue<Output>* output_queue_;
 
-  std::unique_ptr<OpenGLContextManager> opengl_context_;
+//  std::unique_ptr<OpenGLContextManager> opengl_context_;
 
   // The previously uploaded images to the GPU.
   std::array<image_t, 2> prev_uploaded_image_ids_;

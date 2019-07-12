@@ -36,6 +36,8 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 
+#include "mvs/fusion.h"
+#include "base/undistortion.h"
 #include "base/similarity_transform.h"
 #include "controllers/automatic_reconstruction.h"
 #include "controllers/bundle_adjustment.h"
@@ -47,8 +49,9 @@
 #include "mvs/meshing.h"
 #include "mvs/patch_match.h"
 #include "retrieval/visual_index.h"
-#include "ui/main_window.h"
-#include "util/opengl_utils.h"
+//#include "ui/main_window.h"
+
+//#include "util/opengl_utils.h"
 #include "util/version.h"
 
 using namespace colmap;
@@ -58,7 +61,8 @@ const bool kUseOpenGL = false;
 #else
 const bool kUseOpenGL = true;
 #endif
-
+// No GUI!
+/*
 int RunGraphicalUserInterface(int argc, char** argv) {
   OptionManager options;
 
@@ -88,6 +92,8 @@ int RunGraphicalUserInterface(int argc, char** argv) {
 
   return app.exec();
 }
+
+ */
 
 int RunAutomaticReconstructor(int argc, char** argv) {
   AutomaticReconstructionController::Options reconstruction_options;
@@ -161,10 +167,10 @@ int RunAutomaticReconstructor(int argc, char** argv) {
   ReconstructionManager reconstruction_manager;
 
   if (reconstruction_options.use_gpu && kUseOpenGL) {
-    QApplication app(argc, argv);
+//    QApplication app(argc, argv);
     AutomaticReconstructionController controller(reconstruction_options,
                                                  &reconstruction_manager);
-    RunThreadWithOpenGLContext(&controller);
+//    RunThreadWithOpenGLContext(&controller);
   } else {
     AutomaticReconstructionController controller(reconstruction_options,
                                                  &reconstruction_manager);
@@ -426,17 +432,17 @@ int RunExhaustiveMatcher(int argc, char** argv) {
   options.AddExhaustiveMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   ExhaustiveFeatureMatcher feature_matcher(*options.exhaustive_matching,
                                            *options.sift_matching,
                                            *options.database_path);
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_matcher);
+//    RunThreadWithOpenGLContext(&feature_matcher);
   } else {
     feature_matcher.Start();
     feature_matcher.Wait();
@@ -493,16 +499,18 @@ int RunFeatureExtractor(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_extraction->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_extraction->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   SiftFeatureExtractor feature_extractor(reader_options,
                                          *options.sift_extraction);
 
   if (options.sift_extraction->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_extractor);
+    //RunThreadWithOpenGLContext(&feature_extractor);
+      std::cerr << "ERROR: OpenGL Disabled.";
+      return EXIT_FAILURE;
   } else {
     feature_extractor.Start();
     feature_extractor.Wait();
@@ -985,10 +993,10 @@ int RunMatchesImporter(int argc, char** argv) {
   options.AddMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   std::unique_ptr<Thread> feature_matcher;
   if (match_type == "pairs") {
@@ -1008,7 +1016,9 @@ int RunMatchesImporter(int argc, char** argv) {
   }
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(feature_matcher.get());
+//    RunThreadWithOpenGLContext(feature_matcher.get());
+    std::cerr << "ERROR: OpenGL Disabled.";
+    return EXIT_FAILURE;
   } else {
     feature_matcher->Start();
     feature_matcher->Wait();
@@ -1289,17 +1299,19 @@ int RunSequentialMatcher(int argc, char** argv) {
   options.AddSequentialMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   SequentialFeatureMatcher feature_matcher(*options.sequential_matching,
                                            *options.sift_matching,
                                            *options.database_path);
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_matcher);
+    //RunThreadWithOpenGLContext(&feature_matcher);
+      std::cerr << "ERROR: OpenGL Disabled.";
+      return EXIT_FAILURE;
   } else {
     feature_matcher.Start();
     feature_matcher.Wait();
@@ -1668,17 +1680,19 @@ int RunSpatialMatcher(int argc, char** argv) {
   options.AddSpatialMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   SpatialFeatureMatcher feature_matcher(*options.spatial_matching,
                                         *options.sift_matching,
                                         *options.database_path);
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_matcher);
+    //RunThreadWithOpenGLContext(&feature_matcher);
+      std::cerr << "ERROR: OpenGL Disabled.";
+      return EXIT_FAILURE;
   } else {
     feature_matcher.Start();
     feature_matcher.Wait();
@@ -1693,17 +1707,19 @@ int RunTransitiveMatcher(int argc, char** argv) {
   options.AddTransitiveMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   TransitiveFeatureMatcher feature_matcher(*options.transitive_matching,
                                            *options.sift_matching,
                                            *options.database_path);
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_matcher);
+    //RunThreadWithOpenGLContext(&feature_matcher);
+      std::cerr << "ERROR: OpenGL Disabled.";
+      return EXIT_FAILURE;
   } else {
     feature_matcher.Start();
     feature_matcher.Wait();
@@ -1800,17 +1816,19 @@ int RunVocabTreeMatcher(int argc, char** argv) {
   options.AddVocabTreeMatchingOptions();
   options.Parse(argc, argv);
 
-  std::unique_ptr<QApplication> app;
-  if (options.sift_matching->use_gpu && kUseOpenGL) {
-    app.reset(new QApplication(argc, argv));
-  }
+  //std::unique_ptr<QApplication> app;
+  //if (options.sift_matching->use_gpu && kUseOpenGL) {
+  //  app.reset(new QApplication(argc, argv));
+  //}
 
   VocabTreeFeatureMatcher feature_matcher(*options.vocab_tree_matching,
                                           *options.sift_matching,
                                           *options.database_path);
 
   if (options.sift_matching->use_gpu && kUseOpenGL) {
-    RunThreadWithOpenGLContext(&feature_matcher);
+    //RunThreadWithOpenGLContext(&feature_matcher);
+      std::cerr << "ERROR: OpenGL Disabled.";
+      return EXIT_FAILURE;
   } else {
     feature_matcher.Start();
     feature_matcher.Wait();
@@ -2008,7 +2026,7 @@ int main(int argc, char** argv) {
   InitializeGlog(argv);
 
   std::vector<std::pair<std::string, command_func_t>> commands;
-  commands.emplace_back("gui", &RunGraphicalUserInterface);
+//  commands.emplace_back("gui", &RunGraphicalUserInterface);
   commands.emplace_back("automatic_reconstructor", &RunAutomaticReconstructor);
   commands.emplace_back("bundle_adjuster", &RunBundleAdjuster);
   commands.emplace_back("color_extractor", &RunColorExtractor);

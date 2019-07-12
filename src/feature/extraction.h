@@ -35,7 +35,7 @@
 #include "base/database.h"
 #include "base/image_reader.h"
 #include "feature/sift.h"
-#include "util/opengl_utils.h"
+//#include "util/opengl_utils.h"
 #include "util/threading.h"
 
 namespace colmap {
@@ -129,7 +129,7 @@ class SiftFeatureExtractorThread : public Thread {
   const SiftExtractionOptions sift_options_;
   std::shared_ptr<Bitmap> camera_mask_;
 
-  std::unique_ptr<OpenGLContextManager> opengl_context_;
+//  std::unique_ptr<OpenGLContextManager> opengl_context_;
 
   JobQueue<ImageData>* input_queue_;
   JobQueue<ImageData>* output_queue_;

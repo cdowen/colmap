@@ -113,7 +113,7 @@ if(CUDA_ENABLED)
     find_package(CUDA ${CUDA_MIN_VERSION} QUIET)
 endif()
 
-find_package(Qt5 5.4 REQUIRED COMPONENTS Core OpenGL Widgets)
+# find_package(Qt5 5.4 REQUIRED COMPONENTS Core OpenGL Widgets)
 
 if(Qt5_FOUND)
     message(STATUS "Found Qt")
@@ -237,16 +237,6 @@ else()
     set(CGAL_ENABLED OFF)
 endif()
 
-# Qt5 was built with -reduce-relocations.
-if(Qt5_POSITION_INDEPENDENT_CODE)
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-    if(CUDA_ENABLED AND NOT IS_MSVC)
-        set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} --compiler-options -fPIC")
-    endif()
-endif()
-
-# Enable automatic compilation of Qt resource files.
-set(CMAKE_AUTORCC ON)
 
 
 ################################################################################
@@ -263,9 +253,9 @@ set(COLMAP_INCLUDE_DIRS
     ${FREEIMAGE_INCLUDE_DIRS}
     ${CERES_INCLUDE_DIRS}
     ${GLEW_INCLUDE_DIRS}
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5OpenGL_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
+#    ${Qt5Core_INCLUDE_DIRS}
+#    ${Qt5OpenGL_INCLUDE_DIRS}
+#    ${Qt5Widgets_INCLUDE_DIRS}
 )
 
 set(COLMAP_LINK_DIRS
@@ -280,12 +270,12 @@ set(COLMAP_EXTERNAL_LIBRARIES
     ${Boost_SYSTEM_LIBRARY}
     ${GLOG_LIBRARIES}
     ${FREEIMAGE_LIBRARIES}
-    ${CERES_LIBRARIES}
+    ${CERES_LIBRARIES}`
     ${OPENGL_gl_LIBRARY}
     ${OPENGL_glu_LIBRARY}
-    ${Qt5Core_LIBRARIES}
-    ${Qt5OpenGL_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
+#    ${Qt5Core_LIBRARIES}
+#    ${Qt5OpenGL_LIBRARIES}
+#    ${Qt5Widgets_LIBRARIES}
 )
 
 if(CGAL_ENABLED)
@@ -354,7 +344,7 @@ COLMAP_ADD_SOURCE_DIR(src/optim OPTIM_SRCS *.h *.cc)
 COLMAP_ADD_SOURCE_DIR(src/retrieval RETRIEVAL_SRCS *.h *.cc)
 COLMAP_ADD_SOURCE_DIR(src/sfm SFM_SRCS *.h *.cc)
 COLMAP_ADD_SOURCE_DIR(src/tools TOOLS_SRCS *.h *.cc)
-COLMAP_ADD_SOURCE_DIR(src/ui UI_SRCS *.h *.cc)
+#COLMAP_ADD_SOURCE_DIR(src/ui UI_SRCS *.h *.cc)
 COLMAP_ADD_SOURCE_DIR(src/util UTIL_SRCS *.h *.cc)
 
 # Add all of the source files to a regular library target, as using a custom
@@ -380,7 +370,7 @@ add_library(
     ${RETRIEVAL_SRCS}
     ${SFM_SRCS}
     ${TOOLS_SRCS}
-    ${UI_SRCS}
+#    ${UI_SRCS}
     ${UTIL_SRCS}
 )
 

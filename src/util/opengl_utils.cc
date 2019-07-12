@@ -30,15 +30,14 @@
 // Author: Johannes L. Schoenberger (jsch-at-demuc-dot-de)
 
 #include "util/opengl_utils.h"
-
-#include <QApplication>
+#include <thread>
 
 #include "util/logging.h"
 
 namespace colmap {
 
 OpenGLContextManager::OpenGLContextManager()
-    : parent_thread_(QThread::currentThread()),
+    : parent_thread_(std::this_thread::get_id()),
       current_thread_(nullptr),
       make_current_action_(new QAction(this)) {
   CHECK_NOTNULL(QCoreApplication::instance());
