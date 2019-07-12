@@ -1,6 +1,12 @@
 COLMAP
 ======
 
+This is a fork of COLMAP that removes the Qt dependency and gui components, tailored for commandline usage. OpenGL and related GPU accerlation are also removed for simplicity. OpenGL can be made available by modifying src/util/opengl_util.cc and related files, but I am too lazy to do it. What's more, I can use CUDA.
+
+Below is the original README.
+___
+
+
 About
 -----
 
